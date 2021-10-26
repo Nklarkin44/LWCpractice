@@ -1,0 +1,25 @@
+<template>
+   <lightning-card title="Display the Contacts based on AccountId">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
+           <thead>
+               <tr>
+                   <th>Select</th>
+                   <th>Name</th>
+                   <th>Email</th>
+                   <th>Mobile Phone</th>
+                   <th>Lead Source</th>                   
+               </tr>
+           </thead>
+            <template for:each={contactRecords} for:item="accContact">
+                <tr key={accContact.Id}>
+                    <td><lightning-input type="radio" name="radioButtonSelect" value={accContact.Id} onchange={handleChangeRadio}></lightning-input></td>
+                    <td>{accContact.FirstName}</td>
+                    <td>{accContact.Email}</td>
+                    <td>{accContact.MobilePhone}</td>
+                    <td>{accContact.LeadSource}</td>                    
+                </tr>
+            </template>
+      </table>
+ 
+   </lightning-card> 
+</template>
