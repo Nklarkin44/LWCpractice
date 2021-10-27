@@ -1,6 +1,17 @@
 <template>
    <lightning-card title="Display the Contacts based on AccountId">
-      <table class="slds-table slds-table_cell-buffer slds-table_bordered" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
+    <lightning-datatable
+    data={contactRecords}
+    columns={columns}
+    key-field="id"
+    onrowselection={getSelectedName}
+    onsave={handleSave}
+    draft-values={draftValues}
+    >
+    </lightning-datatable>  
+    
+    
+    <!-- <table class="slds-table slds-table_cell-buffer slds-table_bordered" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
            <thead>
                <tr>
                    <th>Select</th>
@@ -19,7 +30,7 @@
                     <td>{accContact.LeadSource}</td>                    
                 </tr>
             </template>
-      </table>
+      </table> -->
  
    </lightning-card> 
 </template>

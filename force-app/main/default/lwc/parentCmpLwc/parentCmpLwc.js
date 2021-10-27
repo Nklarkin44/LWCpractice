@@ -1,26 +1,33 @@
 import { LightningElement, track, wire, api } from 'lwc';
-import retrieveContact from '@salesforce/apex/lwcAppExampleApex.retrieveContactRecords';
+import retrieveContact from '@salesforce/apex/lwcAppExampleApex.retrieveContact';
  
 export default class ParentCmpLwc extends LightningElement {
       
-    @track accountId;
-    @track records;
+    @track contId;
+    @track Conrecords;
     @track errorMsg;
-    @api recordId;     
+    @api recordId;
+       
  
-    @wire (retrieveContact, {conId:'$accountId'})
+    @wire (retrieveContact, {conId: '$contId'})
       wireConRecord({error,data}){
         if(data){
-          this.records = data;     
+          this.Conrecords = data;     
           this.errorMsg = undefined;    
         }else{         
           this.errorMsg = error;
-          this.records = undefined;
+          this.Conrecords = undefined;
         }
       }
  
     handleChangeAction(event){
-      this.accountId = event.detail;
-      window.console.log('accountId ' + this.accountId);
+      this.contId = event.detail;
+      window.console.log('accountId ' + this.contId);
+        fields = {}; 
+        fields[ID_FIELD.fieldApiName] = event.detail.draftValues[0].Id;
+        fields[FIRSTNAME_FIELD.fieldApiName] = event.detail.draftValues[0].FirstName;
+        fields[LASTNAME_FIELD.fieldApiName] = event.detail.draftValues[0].LastName;
     }
+
+    
 }

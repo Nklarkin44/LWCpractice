@@ -24,12 +24,27 @@ public with sharing class lwcAppExampleApex {
     @AuraEnabled(cacheable=true)
     public static List<Contact> retrieveContact(string conId){
         system.debug('NICHOLAS passed account ID: ' + conId);
-      List<Contact> conObj = new  List<Contact>();
-      List<Contact> conList = [Select Id, FirstName, LastName, Email, Phone, MobilePhone, AccountId, LeadSource From Contact Where Id=:conId];
-      for(Contact con:conList){
+      List<Contact> conObj2 = new  List<Contact>();
+      List<Contact> conList2 = [Select Id, FirstName, LastName, Email, MobilePhone, LeadSource From Contact Where Id=:conId LIMIT 1];
+      for(Contact con:conList2){
         system.debug('NICHOLAS contact name: ' + con.FirstName);
-        conObj.add(con);
+        conObj2.add(con);
       }
-      return conObj;
+      return conObj2;
+    }
+    
+    @AuraEnabled
+    public static string updateContacts(Object data) {
+        List<Contact> contactsForUpdate = (List<Contact>) JSON.deserialize(
+             JSON.serialize(data),
+             List<Contact>.class
+        );
+        try {
+            update contactsForUpdate;
+            return 'Success: contacts updated successfully';
+        }
+        catch (Exception e) {
+            return 'The following exception has occurred: ' + e.getMessage();
+        }
     }
 }
